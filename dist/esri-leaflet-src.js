@@ -1,4 +1,4 @@
-/*! Esri-Leaflet - v0.0.1 - 2013-10-30
+/*! Esri-Leaflet - v0.0.1 - 2013-11-07
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Apache License*/
 (function (root, factory) {
@@ -3544,6 +3544,8 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
       src: this._getImageUrl(),
       'data-bounds': this._map.getBounds().toBBoxString()
     });
+    
+    this.fire('loading');
   },
 
   _updateOpacity: function(){
@@ -3593,4 +3595,21 @@ L.esri.DynamicMapLayer = L.ImageOverlay.extend({
 
 L.esri.dynamicMapLayer = function (url, options) {
   return new L.esri.DynamicMapLayer(url, options);
+};
+
+L.esri.ImageServerLayer = L.esri.DynamicMapLayer.extend({
+  _getImageUrl: function () {
+    var size = this._map.getSize();
+
+    this._layerParams.bbox = this._map.getBounds().toBBoxString();
+    this._layerParams.size = size.x + ',' + size.y;
+
+    var url = this.serviceUrl + 'exportImage' + L.Util.getParamString(this._layerParams);
+
+    return url;
+  }
+});
+
+L.esri.imageServerLayer = function (url, options) {
+  return new L.esri.ImageServerLayer(url, options);
 };
