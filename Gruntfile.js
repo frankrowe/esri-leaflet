@@ -42,7 +42,8 @@ module.exports = function(grunt) {
           'src/Layers/BasemapLayer.js',
           'src/Layers/FeatureLayer.js',
           'src/Layers/TiledMapLayer.js',
-          'src/Layers/DynamicMapLayer.js'
+          'src/Layers/DynamicMapLayer.js',
+          'src/Layers/ImageServerLayer.js'
         ],
         dest: 'dist/esri-leaflet-src.js'
       },
